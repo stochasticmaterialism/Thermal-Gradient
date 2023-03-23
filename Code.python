@@ -1,0 +1,296 @@
+import pandas as pd 
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+working_directory8=r'C:\Users\806636\Desktop\Flue\Battery 8'
+working_directory9=r'C:\Users\806636\Desktop\Flue\Battery 9'
+
+data,data1,name1=[],[],[]
+batt=int(input("Press 8/9 to specify the battery type: "))
+if batt==9:
+    path=working_directory9
+    save=r"C:\Users\806636\Desktop\Box Plots\Battery 9"
+    show="Battery 9 Oven Overview"
+    namex="Battery 9"
+    os.chdir(path)
+    for file in os.listdir():
+        # Check whether file is in text format or not
+        if file.endswith(".xls"):
+            file_path=f"{path}\{file}"
+            #print(file_path)
+            #print(file_path[29])
+            df=pd.read_excel(file_path)
+            df=pd.DataFrame(df)
+            df=np.array(df)
+            df=df[0:70,0:10]
+            #print(df)
+            #print(df.shape)
+            data.append(df) 
+    #print(data)
+    #print(len(data))
+    path=r"C:\Users\806636\Desktop\Cross Wall\Battery 9"
+    os.chdir(path)
+    temp_name=""
+    for file in os.listdir():
+        # Check whether file is in text format or not
+        if file.endswith(".xls"):
+            file_path=f"{path}\{file}"
+            #print(file_path)
+            #print(len(file_path))
+            if (len(file_path)==53):
+                temp_name=file_path[45:47]
+            else:
+                temp_name=file_path[45:46]
+            #print(temp_name)
+            df=pd.read_excel(file_path)
+            df=pd.DataFrame(df)
+            df=np.array(df)
+            #print(df)
+            df=df[5:32,0:2]
+            #print(df)
+            #print(df.shape)
+            data1.append(df)
+            name1.append(temp_name)
+    #print(data1)
+    #print(len(data1))
+    #print(name1)
+    #print(len(name1))
+elif batt==8:
+    path=working_directory8
+    save=r"C:\Users\806636\Desktop\Box Plots\Battery 8"
+    show="Battery 8 Oven Overview"
+    namex="Battery 8"
+    os.chdir(path)
+    for file in os.listdir():
+        # Check whether file is in text format or not
+        if file.endswith(".xls"):
+            file_path=f"{path}\{file}"
+            #print(file_path)
+            #print(file_path[29])
+            df=pd.read_excel(file_path)
+            df=pd.DataFrame(df)
+            df=np.array(df)
+            df=df[0:70,0:10]
+            #print(df)
+            #print(df.shape)
+            data.append(df)
+    #print(data)
+    #print(len(data))
+    path=r"C:\Users\806636\Desktop\Cross Wall\Battery 8"
+    os.chdir(path)
+    temp_name=""
+    for file in os.listdir():
+        # Check whether file is in text format or not
+        if file.endswith(".xls"):
+            file_path=f"{path}\{file}"
+            #print(file_path)
+            #print(len(file_path))
+            if (len(file_path)==53):
+                temp_name=file_path[45:47]
+            else:
+                temp_name=file_path[45:46]
+            #print(temp_name)
+            df=pd.read_excel(file_path)
+            df=pd.DataFrame(df)
+            df=np.array(df)
+            #print(df)
+            df=df[5:32,0:2]
+            #print(df)
+            #print(df.shape)
+            data1.append(df)
+            name1.append(temp_name)
+    #print(data1)
+    #print(len(data1))
+    #print(name1)
+    #print(len(name1))
+else:
+    print("Model not available for this battery")
+    exit()
+    
+temp,name=[],[]
+for i in range(70):
+    df=str(i+1)
+    #print(df)
+    name.append(int(df))
+    df=[[],[],[],[],[]]
+    temp.append(df)
+    
+#print(temp)    
+#print(len(temp))
+#print(name)
+#print(len(name))
+
+'''for i in range(len(temp)):
+    print(len(temp[i]))
+    for j in range(len(temp[i])):
+        print(len(temp[i][j]))'''
+       
+for i in range(len(data)):
+    #print(data[i])
+    #print(data[i].shape)
+    #print(data[i].shape[0])
+    #print(data[i].shape[1])
+    for j in range(data[i].shape[0]):
+        #print(data[i][j][3])
+        #print(data[i][j][4])
+        #print(data[i][j][5])
+        temp[j][0].append(data[i][j][3])
+        temp[j][1].append(data[i][j][4])
+        temp[j][2].append(data[i][j][5])
+        temp[j][3].append(data[i][j][8])
+        temp[j][4].append(data[i][j][7])
+        
+#print(temp)
+#print(len(temp))
+'''for i in range(len(temp)):
+    #print(len(temp[i]))
+    for j in range(len(temp[i])):
+        #print(len(temp[i][j]))
+        print(temp[i][j])'''
+
+for i in range(len(temp)):
+    temp[i]=np.array(temp[i])
+    for j in range(len(temp[i])):
+        temp[i][j]=np.array(temp[i][j])
+temp=np.array(temp)
+
+#print(temp.shape)
+'''for i in range(temp.shape[0]):
+    print(temp[i].shape)
+    for j in range(temp[i][j].shape[0]):
+        print(temp[i][j].shape)'''
+        
+s=[]
+for i in range(data[10].shape[0]):
+    s.append(0)
+    
+for i in range(len(data)):
+    for j in range(data[i].shape[0]):
+        s[j]=s[j]+data[i][j][7]
+        
+#print(len(s))
+for i in range(len(s)):
+    s[i]=s[i]/71
+    
+#print(s)
+s=np.array(s)
+
+name=np.array(name)
+r,m,c,a=[],[],[],[]
+r_m,m_m,c_m,a_m,dist=[],[],[],[],[]
+for i in range(temp.shape[0]):
+    r.append(temp[i][0])
+    x=np.median(temp[i][0])
+    r_m.append(x)
+    m.append(temp[i][1])
+    x=np.median(temp[i][1])
+    m_m.append(x)
+    c.append(temp[i][2])
+    x=np.median(temp[i][2])
+    c_m.append(x)
+    a.append(temp[i][3])
+    x=np.median(temp[i][3])
+    a_m.append(x)
+    x=np.median(temp[i][4])
+    dist.append(x)
+    
+
+r=np.array(r)
+r=np.transpose(r)
+m=np.array(m)
+m=np.transpose(m)
+c=np.array(c)
+c=np.transpose(c)
+a=np.array(a)
+a=np.transpose(a)
+
+#print(a_m)
+
+fig,ax1=plt.subplots(figsize=(20,10)) 
+ax1.set_xlabel('Oven Number') 
+ax1.set_ylabel('Oven Temperature ($^o$C)',color='black') 
+plot_1=ax1.plot(name,a_m,color='blue',linewidth=2)
+colors=['red','green','orange']
+ax1.boxplot(a,showfliers=False,notch=True,patch_artist=True) 
+for i in range(len(a_m)):
+    if a_m[i]>1310:
+        patch.set_edgecolor(colors[0])
+        patch.set_facecolor(colors[0])
+    if a_m[i]<1290:
+        patch.set_edgecolor(colors[2])
+        patch.set_facecolor(colors[2])
+    else:
+        patch.set_edgecolor(colors[1])
+        patch.set_facecolor(colors[1])
+ax1.tick_params(axis='y',labelcolor='black') 
+ax1.axhline(y=1330,c="orange",linewidth=1,zorder=0)
+ax1.axhline(y=1290,c="orange",linewidth=1,zorder=0)
+y=namex+" New"
+plt.title(namex+" CBT")
+fig.savefig(os.path.join(save,y),bbox_inches='tight',dpi=1000)
+plt.show()
+
+faulty=[]
+print("Faulty Oven Numbers: ",end=" ")
+for i in range(len(s)):
+    if a_m[i]>1330 or a_m[i]<1290:
+        print(i+1,end=" ")
+        faulty.append(i+1)
+        
+#print(len(faulty))
+#print(faulty)
+
+#array=pd.DataFrame(a_m)
+#print(array1)
+#array1.to_csv(save+".csv")
+#array2=pd.DataFrame(s)
+#print(array2)
+#array2.to_csv(save+".csv")
+
+for i in range(len(data1)):
+    for j in range(data1[i].shape[0]):
+        data1[i][j][1]=float(data1[i][j][1])
+        data1[i][j][0]=float(data1[i][j][0])
+    
+#print(data1)
+#print(len(data1))
+
+cwt=[]
+
+for i in range(len(name1)):
+    name1[i]=int(name1[i])
+name1.sort()  
+
+#print(name1)
+#print(len(name1))
+
+res=[*set(name1)]
+res.sort(reverse=True)
+#print(res)
+#print(len(res))
+
+for i in range(len(res)):
+    t=[]
+    for j in range(data1[i].shape[0]):
+        t.append(data1[i][j][1])
+    cwt.append(t)
+
+#print(cwt)
+#print(len(cwt))
+#print(len(cwt[0]))
+
+fig,ax=plt.subplots(figsize=(15,5))
+sns.heatmap(cwt,linewidth=0.5,cmap='coolwarm')
+plt.xlabel("Flue Number")
+plt.ylabel("Oven Number")
+ax.set_yticklabels(res)
+ticks=[]
+for i in range(27):
+    ticks.append(i+1)
+ax.set_xticklabels(ticks)
+plt.title(namex+" Cross Wall Temperature Profile")
+y=namex+" CWT"
+#fig.savefig(os.path.join(save,y),bbox_inches='tight',dpi=1000)
+plt.show()
